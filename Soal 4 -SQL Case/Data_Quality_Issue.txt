@@ -1,0 +1,10 @@
+1. Data for productRefundAmount, and productRevenue don't have value at all.
+2. Some of the Product, have totalTransactionRevenue but don't have productPrice or it's productPrice = 0
+
+this Data quality issue, causing the analysis for this ecommerce_session not accurate, 
+
+for example in case number 1.
+    but data in productRevenue don't have value, so how to determine top 5 countrys from each channel grouping 
+
+for example in case number 3.
+    how analysis can be done for data productRefundAmount, and productRevenue with NUll or 0  only.

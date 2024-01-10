@@ -1,0 +1,88 @@
+Database : PostGre
+Schema : STAGING, DWH
+
+define all column from ecommerce-session-bigquery.csv
+
+Create table in PostGre under schema STAGING with with table name : ecommerce_session. this table contains all column with type data as text.
+SQL SCRIPT :
+    CREATE TABLE "STAGING".ecommerce_session (
+        fullvisitorid text,
+        channelgrouping text,
+        "time" text,
+        country text,
+        city text,
+        totaltransactionrevenue text,
+        transactions text,
+        timeonsite text,
+        pageviews text,
+        sessionqualitydim text,
+        "date" text,
+        visitid text,
+        "type" text,
+        productrefundamount text,
+        productquantity text,
+        productprice text,
+        productrevenue text,
+        productsku text,
+        v2productname text,
+        v2productcategory text,
+        productvariant text,
+        currencycode text,
+        itemquantity text,
+        itemrevenue text,
+        transactionrevenue text,
+        transactionid text,
+        pagetitle text,
+        searchkeyword text,
+        pagepathlevel1 text,
+        ecommerceaction_type text,
+        ecommerceaction_step text,
+        ecommerceaction_option text
+    );
+
+Import data to "STAGING".ecommerce_session from csv file using feature in PostGre. This stage also can be achieved by using SQL SCRIPT.
+SQL SCRIPT : 
+    COPY STAGING."ECOMMERCE_SESSION" FROM 'CSV_LOCATION' WITH (FORMAT CSV);
+for CSV_LOCATION value change it for the path where you store the csv file, 
+in my case E:\Doc Lamaran\Test NTX\ntx-de-test\Soal 1 - Data Transformation dan Analysis Case\ecommerce-session-bigquery.csv
+
+Create table in PostGre under schema DWH with with table name : ecommerce_session. this table contains some needed column with type data based on it's value.
+SQL SCRIPT :
+    CREATE TABLE "DWH".ecommerce_session
+    (
+        channelGrouping text,
+        country text,
+        fullVisitorId text,
+        timeOnSite numeric,
+        pageviews numeric,
+        sessionQualityDim numeric,
+        v2ProductName text,
+        productRevenue numeric,
+        productQuantity numeric,
+        productRefundAmount numeric
+    );
+
+In The creating of this table i consider to using numeric as data type for number value, because it's much more accurate than other data type.
+
+
+Insert Data from "STAGING".ecommerce_session to "DWH".ecommerce_session
+SQL SCRIPT :
+    INSERT INTO "DWH".ecommerce_session
+    SELECT 
+        channelGrouping,
+        country,
+        fullVisitorId,
+        cast(timeOnSite as numeric),
+        cast(pageviews as numeric),
+        cast(sessionQualityDim as numeric),
+        v2ProductName,
+        cast(productRevenue as numeric),
+        cast(productQuantity as numeric),
+        cast(productRefundAmount as numeric)
+    FROM
+    "STAGING".ecommerce_session;
+
+
+Reason i have two schema STAGING and DWH, it's because for ingestion data from csv file, it's better to get all of the data as is, 
+then do the transformation in another table.
+

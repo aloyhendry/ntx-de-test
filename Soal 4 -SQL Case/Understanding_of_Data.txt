@@ -1,0 +1,2 @@
+This is data for ecommerce session that have data for fullVisitorId, it's origin, it's behavior, product data, and it's page data.
+Data have some anomally in column productPrice, productRefundAmount, productQuantity, productRevenue.

@@ -1,0 +1,6 @@
+Case 1 :
+    I will be able to determine the top 5 countries with the highest revenue from each channelGrouping
+Case 2 :
+    I will know how long is user do the interaction on the ecommerce website, also if the use have the best session or not.
+Case 3 :
+    I can determine which product that have highest netrevenue, also see how much it's sold, and see how much is the gross revenue and total return ammount 
